@@ -3,13 +3,17 @@
 //
 
 #include "olvasas.h"
+
+#include <ctype.h>
+#include <stdbool.h>
+
 #include "util.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-//#define DEBUG
+#define DEBUG
 
 #ifdef DEBUG
 #define SHOW printf
@@ -84,3 +88,104 @@ Pixel2Byte read_pixel2Byte(unsigned short r, unsigned short g, unsigned short b)
 
     return pixel;
 }
+
+void file_step_till_whitespace(FILE* fp) {
+    char byte;
+    while(byte != '\n') {
+        fread(&byte, 1, 1, fp);
+        SHOW("stepped towards new line from hashmark");
+    }
+}
+
+
+Img1Byte read_image_1byte(FILE* fp) {
+    Img1Byte img;
+
+    //comments start
+    img.comments.size = 0;
+    int whitespaceCount = 0;
+    char currentByte = 0;
+    while(whitespaceCount != 4) {
+        fread(&currentByte, 1, 1, fp);
+        if (currentByte == '#') {
+            file_step_till_whitespace(fp);
+            img.comments.size++;
+        }
+        if(isspace(currentByte)) {
+            whitespaceCount++;
+            SHOW("found whitespace");
+        }
+    }
+    SHOW("header whitespace and comment counted.");
+
+    long int headerSize = ftell(fp) + 1;
+    fseek(fp, 0, SEEK_SET);
+
+    char *header = (char*) malloc(headerSize * sizeof(char));
+    fgets(header, headerSize, fp);
+    char *headerCopy = strcopy(header);
+
+    SHOW("header copied.");
+
+    StringArray tempComments;
+    tempComments.data = (char**) malloc(img.comments.size * sizeof(char*));
+    SHOW("tempComments malloced.");
+
+    int i = 0;
+    int j = 0;
+    while (headerCopy[i] != '\0') {
+        if(headerCopy[i] == '#') {
+            tempComments.data[j++] = &headerCopy[i];
+            while (headerCopy[i] != '\n')
+                i++;
+            headerCopy[i] = '\0';
+        }
+        i++;
+    }
+    SHOW("tempComments filled.");
+
+
+    img.comments.data = (char**) malloc(img.comments.size * sizeof(char*));
+    for (i = 0; i < img.comments.size; i++)
+        img.comments.data[i] = strcopy(tempComments.data[i]);
+
+    free(headerCopy);
+    string_array_free(tempComments);
+    SHOW("comments done");
+
+    //comments done
+
+    sscanf((header), "P%d", &img.TYPE); //type
+
+    char headerWithoutComment[100];
+    i = 0;
+    j = 0;
+    while(header[i] != '\0') {
+        if(header[i] == '#') {
+            while (header[i] != '\n')
+                i++;
+        }
+
+        headerWithoutComment[j++] = header[i];
+    }
+
+    char *token;
+
+    token = strtok(headerWithoutComment, " \t\n\v\f\r");
+    img.width = atoi(token);
+
+    token = strtok(NULL, " \t\n\v\f\r");
+    img.height = atoi(token);
+
+    token = strtok(NULL, " \t\n\v\f\r");
+    img.maxValue = atoi(token);
+
+    SHOW("header done");
+    //header done
+
+
+    free(header);
+    fclose(fp);
+    return img;
+}
+

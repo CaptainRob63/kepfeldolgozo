@@ -46,13 +46,33 @@ typedef struct Array2DPixel2Byte {
 
 
 
+typedef struct StringArray {
+    char** data;
+    int size;
+} StringArray;
+
+typedef  enum IMAGE_TYPE {
+    P1 = 1,
+    P2 = 2,
+    P3 = 3,
+    P4 = 4,
+    P5 = 5,
+    P6 = 6,
+} IMAGE_TYPE;
+
 typedef struct Img1Byte {
-    Array2DPixel2Byte array;
+    IMAGE_TYPE TYPE;
+    unsigned short maxValue;
+    StringArray comments;
+    Array2DPixel1Byte array;
     int height;
     int width;
 } Img1Byte;
 
 typedef struct Img2Byte {
+    IMAGE_TYPE TYPE;
+    unsigned short maxValue;
+    StringArray comments;
     Array2DPixel2Byte array;
     int height;
     int width;
@@ -77,6 +97,11 @@ typedef struct Matrix {
     Array2Ddouble array;
     char name[32];
 } Matrix;
+
+
+
+
+void string_array_free(StringArray strArr);                 //TODO!!!
 
 char *strcopy(const char *orig);
 

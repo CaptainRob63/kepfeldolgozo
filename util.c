@@ -6,6 +6,8 @@
 
 #include "util.h"
 
+#include <stdio.h>
+
 
 // basic string copier. Returns mallocated string. Caller must free.
 // alap string másoló. Visszatér egy dinamikusan allokált stringgel. Hívónak felelőssége felszabadítani.
@@ -15,4 +17,10 @@ char *strcopy(const char *orig) {
     for (int i = 0; orig[i] != '\0'; i++)
         copy[i] = orig[i];
     return copy;
+}
+
+void string_array_free(StringArray strArr) {
+    for(int i = 0; i < strArr.size; i++)
+        free(strArr.data[i]);
+    free(strArr.data);
 }
