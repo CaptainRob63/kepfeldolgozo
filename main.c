@@ -10,7 +10,7 @@
 int main(int argc, char *argv[]) {
 
 
-    Matrix matrix = readMatrix(argv[1], argv[2], argv[3], argv[4]);
+    Matrix matrix = read_matrix(argv[1], argv[2], argv[3], argv[4]);
 
     for (int i = 0; i  < matrix.array.height; i++)
         for(int j = 0; j < matrix.array.width; j++)
@@ -21,5 +21,8 @@ int main(int argc, char *argv[]) {
 
 
     free(matrix.array.data);
+
+
+
     return 0;
 }

@@ -1,5 +1,12 @@
 # ninja log v6
 9	57	7522843715473806	CMakeFiles/kepfeldolgozo.dir/iras.c.obj	587cc1194198e9ba
-68	140	7527167094927634	kepfeldolgozo.exe	9786f75af36f8e68
 4	67	7527167094292798	CMakeFiles/kepfeldolgozo.dir/main.c.obj	3dcc824871a0b946
+68	140	7527167094927634	kepfeldolgozo.exe	9786f75af36f8e68
 4	83	7527166301951923	CMakeFiles/kepfeldolgozo.dir/olvasas.c.obj	ab65bf75229ce1e5
+5	420	7527897341076530	build.ninja	d7cbb05a9b94c956
+10	93	7527897341452480	CMakeFiles/kepfeldolgozo.dir/util.c.obj	95750b14f5dc8b46
+7	94	7527897341412448	CMakeFiles/kepfeldolgozo.dir/olvasas.c.obj	ab65bf75229ce1e5
+3	94	7527897341382328	CMakeFiles/kepfeldolgozo.dir/main.c.obj	3dcc824871a0b946
+94	282	7527897342290105	kepfeldolgozo.exe	9dcc5aa9cce66bca
+4	68	7527898468574332	CMakeFiles/kepfeldolgozo.dir/main.c.obj	3dcc824871a0b946
+68	144	7527898469216677	kepfeldolgozo.exe	9dcc5aa9cce66bca

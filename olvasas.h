@@ -8,6 +8,9 @@
 #define OLVASAS_H
 
 
-Matrix readMatrix(const char *name, const char *height, const char *width, const char *data);
+Matrix read_matrix(const char *name, const char *height, const char *width, const char *data);
+
+Pixel1Byte read_pixel_1byte(char r, char g, char b);
+Pixel2Byte read_pixel_2byte(unsigned short r, unsigned short g, unsigned short b);
 
 #endif //OLVASAS_H

@@ -7,7 +7,6 @@
 #include "util.h"
 
 
-
 // basic string copier. Returns mallocated string. Caller must free.
 // alap string másoló. Visszatér egy dinamikusan allokált stringgel. Hívónak felelőssége felszabadítani.
 

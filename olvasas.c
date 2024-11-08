@@ -25,7 +25,7 @@
 // Inicializál egy mátrix struktúrát. Argumentumai stringek, így argv[] elemei egyszerűen átadhatók neki.
 // Data először egy bufferbe másolva stringként, majd tokenizálással olvasva doubleként.
 
-Matrix readMatrix(const char *name, const char *height, const char *width,  const char *data) {
+Matrix read_matrix(const char *name, const char *height, const char *width,  const char *data) {
     Matrix matrix;
 
     for (int i = 0; i < 32; i++)
@@ -62,4 +62,25 @@ Matrix readMatrix(const char *name, const char *height, const char *width,  cons
     free(databuffer);
 
     return matrix;
+}
+
+
+Pixel1Byte read_pixel1Byte(char r, char g, char b) {
+    Pixel1Byte pixel;
+
+    pixel.red = r;
+    pixel.green = g;
+    pixel.blue = b;
+
+    return pixel;
+}
+
+Pixel2Byte read_pixel2Byte(unsigned short r, unsigned short g, unsigned short b) {
+    Pixel2Byte pixel;
+
+    pixel.red = r;
+    pixel.green = g;
+    pixel.blue = b;
+
+    return pixel;
 }
