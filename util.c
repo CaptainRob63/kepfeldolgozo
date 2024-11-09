@@ -20,9 +20,9 @@ char *strcopy(const char *orig) {
     return copy;
 }
 
-void string_array_print(StringArray *strArr) {
+void string_array_print(StringArray *strArr, char *name) {
     for (int i = 0; i < strArr->size; i++) {
-        printf("string array [%d] : %s\n", i, strArr->data[i]);
+        printf("%s[%d] : %s\n", name ,i, strArr->data[i]);
     }
 }
 

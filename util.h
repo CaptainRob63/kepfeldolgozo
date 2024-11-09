@@ -101,7 +101,7 @@ typedef struct Matrix {
 } Matrix;
 
 
-void string_array_print(StringArray *strArr);
+void string_array_print(StringArray *strArr, char *name);
 
 void string_array_free(StringArray *strArr);
 

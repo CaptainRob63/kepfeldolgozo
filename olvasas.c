@@ -23,11 +23,7 @@
 
 
 
-// Initializes a matrix. Arguments are just argv[].
-// Data is copied to matrix with a buffer string that is tokenized.
 
-// Inicializál egy mátrix struktúrát. Argumentumai stringek, így argv[] elemei egyszerűen átadhatók neki.
-// Data először egy bufferbe másolva stringként, majd tokenizálással olvasva doubleként.
 
 Matrix read_matrix(const char *name, const char *height, const char *width,  const char *data) {
     Matrix matrix;
@@ -153,7 +149,6 @@ Img1Byte read_image_1byte(FILE* fp) {
     }
     SHOW("tempComments filled.\n");
 
-    string_array_print(&tempComments);
 
     img.comments.data = (char**) malloc(img.comments.size * sizeof(char*));
     if(img.comments.data == NULL)
