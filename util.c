@@ -7,6 +7,7 @@
 #include "util.h"
 
 #include <stdio.h>
+#include <wchar.h>
 
 
 // basic string copier. Returns mallocated string. Caller must free.
@@ -19,8 +20,19 @@ char *strcopy(const char *orig) {
     return copy;
 }
 
-void string_array_free(StringArray strArr) {
-    for(int i = 0; i < strArr.size; i++)
-        free(strArr.data[i]);
-    free(strArr.data);
+void string_array_print(StringArray *strArr) {
+    for (int i = 0; i < strArr->size; i++) {
+        printf("string array [%d] : %s\n", i, strArr->data[i]);
+    }
+}
+
+void string_array_free(StringArray *strArr) {
+    if (strArr->size == 0)
+        return;
+
+    for(int i = 0; i < strArr->size; i++) {
+        free(strArr->data[i]);
+        printf("string freed\n");
+    }
+    free(strArr->data);
 }

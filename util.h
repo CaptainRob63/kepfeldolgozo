@@ -78,6 +78,8 @@ typedef struct Img2Byte {
     int width;
 } Img2Byte;
 
+void img1B_free(Img1Byte *img);
+void img2B_free(Img2Byte * img);
 
 
 
@@ -99,9 +101,9 @@ typedef struct Matrix {
 } Matrix;
 
 
+void string_array_print(StringArray *strArr);
 
-
-void string_array_free(StringArray strArr);                 //TODO!!!
+void string_array_free(StringArray *strArr);
 
 char *strcopy(const char *orig);
 

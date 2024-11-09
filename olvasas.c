@@ -13,7 +13,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define DEBUG
+//#define DEBUG
 
 #ifdef DEBUG
 #define SHOW printf
@@ -93,9 +93,12 @@ void file_step_till_whitespace(FILE* fp) {
     char byte;
     while(byte != '\n') {
         fread(&byte, 1, 1, fp);
-        SHOW("stepped towards new line from hashmark");
+        SHOW("stepped towards new line from hashmark.\n");
     }
 }
+
+
+
 
 
 Img1Byte read_image_1byte(FILE* fp) {
@@ -113,23 +116,29 @@ Img1Byte read_image_1byte(FILE* fp) {
         }
         if(isspace(currentByte)) {
             whitespaceCount++;
-            SHOW("found whitespace");
+            SHOW("found whitespace.\n");
         }
     }
-    SHOW("header whitespace and comment counted.");
+    SHOW("comments array size : %d\n", img.comments.size);
+    SHOW("header whitespace and comment counted.\n");
 
     long int headerSize = ftell(fp) + 1;
     fseek(fp, 0, SEEK_SET);
 
     char *header = (char*) malloc(headerSize * sizeof(char));
-    fgets(header, headerSize, fp);
+    for (int i = 0; i < headerSize; ++i) {
+        fread(&header[i], 1, 1, fp);
+    }
+    header[headerSize] = '\0';
+
     char *headerCopy = strcopy(header);
 
-    SHOW("header copied.");
+    SHOW("header read and copied.\nheader : %s\ncopy : %s\n", header, headerCopy);
 
     StringArray tempComments;
     tempComments.data = (char**) malloc(img.comments.size * sizeof(char*));
-    SHOW("tempComments malloced.");
+    tempComments.size = img.comments.size;
+    SHOW("tempComments malloced. %p\n", tempComments.data);
 
     int i = 0;
     int j = 0;
@@ -142,20 +151,30 @@ Img1Byte read_image_1byte(FILE* fp) {
         }
         i++;
     }
-    SHOW("tempComments filled.");
+    SHOW("tempComments filled.\n");
 
+    string_array_print(&tempComments);
 
     img.comments.data = (char**) malloc(img.comments.size * sizeof(char*));
+    if(img.comments.data == NULL)
+        fprintf(stderr,"comment string array could not be malloced.\n");
+
+
     for (i = 0; i < img.comments.size; i++)
         img.comments.data[i] = strcopy(tempComments.data[i]);
 
+
+
     free(headerCopy);
-    string_array_free(tempComments);
-    SHOW("comments done");
+    SHOW("headercopy freed.\n");
+    free(tempComments.data);
+    SHOW("comments done.\n");
 
     //comments done
 
     sscanf((header), "P%d", &img.TYPE); //type
+
+    SHOW("type scanned.\n");
 
     char headerWithoutComment[100];
     i = 0;
@@ -165,13 +184,18 @@ Img1Byte read_image_1byte(FILE* fp) {
             while (header[i] != '\n')
                 i++;
         }
-
-        headerWithoutComment[j++] = header[i];
+        headerWithoutComment[j++] = header[i++];
     }
+    headerWithoutComment[j] = '\0';
+    SHOW("header without comment copied.");
 
     char *token;
 
-    token = strtok(headerWithoutComment, " \t\n\v\f\r");
+
+    token = strtok(headerWithoutComment, " \t\n\v\f\r" );
+    sscanf(token, "P%d", &img.TYPE);
+
+    token = strtok(NULL, " \t\n\v\f\r");
     img.width = atoi(token);
 
     token = strtok(NULL, " \t\n\v\f\r");
