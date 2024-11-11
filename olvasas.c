@@ -93,33 +93,30 @@ void file_step_till_whitespace(FILE* fp) {
     }
 }
 
-
-
-
-
-Img1Byte read_image_1byte(FILE* fp) {
-    Img1Byte img;
-
-    //comments start
-    img.comments.size = 0;
+// first counts header size, simultainously counting the number of comments.
+// then mallocs a header string, fills it and returns it.
+static char *read_header_to_string(Img1Byte *img, FILE* fp) {
+    img->comments.size = 0;
     int whitespaceCount = 0;
     char currentByte = 0;
     while(whitespaceCount != 4) {
         fread(&currentByte, 1, 1, fp);
         if (currentByte == '#') {
             file_step_till_whitespace(fp);
-            img.comments.size++;
+            img->comments.size++;
         }
         if(isspace(currentByte)) {
             whitespaceCount++;
             SHOW("found whitespace.\n");
         }
     }
-    SHOW("comments array size : %d\n", img.comments.size);
+    SHOW("comments array size : %d\n", img->comments.size);
     SHOW("header whitespace and comment counted.\n");
 
-    long int headerSize = ftell(fp) + 1;
+
+    long int headerSize = ftell(fp);
     fseek(fp, 0, SEEK_SET);
+
 
     char *header = (char*) malloc(headerSize * sizeof(char));
     for (int i = 0; i < headerSize; ++i) {
@@ -127,13 +124,18 @@ Img1Byte read_image_1byte(FILE* fp) {
     }
     header[headerSize] = '\0';
 
+    return header;
+}
+
+
+// copied header string is mangled: it creates "parasitic" strings inside that copy, by changing the next newline after a hashmark to a terminating zero.
+// it then fills an array of strings with these "substrings", before actually copying them to the image structure.
+static void read_comments_array_to_img(Img1Byte *img, char *header) {
     char *headerCopy = strcopy(header);
 
-    SHOW("header read and copied.\nheader : %s\ncopy : %s\n", header, headerCopy);
-
     StringArray tempComments;
-    tempComments.data = (char**) malloc(img.comments.size * sizeof(char*));
-    tempComments.size = img.comments.size;
+    tempComments.data = (char**) malloc(img->comments.size * sizeof(char*));
+    tempComments.size = img->comments.size;
     SHOW("tempComments malloced. %p\n", tempComments.data);
 
     int i = 0;
@@ -150,30 +152,24 @@ Img1Byte read_image_1byte(FILE* fp) {
     SHOW("tempComments filled.\n");
 
 
-    img.comments.data = (char**) malloc(img.comments.size * sizeof(char*));
-    if(img.comments.data == NULL)
+    img->comments.data = (char**) malloc(img->comments.size * sizeof(char*));
+    if(img->comments.data == NULL)
         fprintf(stderr,"comment string array could not be malloced.\n");
 
 
-    for (i = 0; i < img.comments.size; i++)
-        img.comments.data[i] = strcopy(tempComments.data[i]);
-
-
+    for (i = 0; i < img->comments.size; i++)
+        img->comments.data[i] = strcopy(tempComments.data[i]);
 
     free(headerCopy);
-    SHOW("headercopy freed.\n");
     free(tempComments.data);
-    SHOW("comments done.\n");
 
-    //comments done
+}
 
-    sscanf((header), "P%d", &img.TYPE); //type
 
-    SHOW("type scanned.\n");
-
-    char headerWithoutComment[100];
-    i = 0;
-    j = 0;
+// goes through a header string character by character, skipping over comments, and copying the rest.
+static void generate_header_without_comment(char *headerWithoutComment, char *header) {
+    int i = 0;
+    int j = 0;
     while(header[i] != '\0') {
         if(header[i] == '#') {
             while (header[i] != '\n')
@@ -182,29 +178,43 @@ Img1Byte read_image_1byte(FILE* fp) {
         headerWithoutComment[j++] = header[i++];
     }
     headerWithoutComment[j] = '\0';
-    SHOW("header without comment copied.");
 
+
+}
+
+// header without comment can be trivially tokenized with newline characters as a delimiter.
+static void read_header_wo_comment_to_img(Img1Byte *img, char *headerWithoutComment) {
     char *token;
 
-
     token = strtok(headerWithoutComment, " \t\n\v\f\r" );
-    sscanf(token, "P%d", &img.TYPE);
+    sscanf(token, "P%d", &img->TYPE);
 
     token = strtok(NULL, " \t\n\v\f\r");
-    img.width = atoi(token);
+    img->width = atoi(token);
 
     token = strtok(NULL, " \t\n\v\f\r");
-    img.height = atoi(token);
+    img->height = atoi(token);
 
     token = strtok(NULL, " \t\n\v\f\r");
-    img.maxValue = atoi(token);
+    img->maxValue = atoi(token);
 
-    SHOW("header done");
-    //header done
+}
 
+// so simple! definitely did not take 5 hours to write !!! (◡‿◡✿)
+Img1Byte read_image_1byte(FILE* fp) {
+    Img1Byte img;
+
+    char *header = read_header_to_string(&img, fp);
+
+    read_comments_array_to_img(&img, header);
+
+    char headerWithoutComment[100];
+    generate_header_without_comment(headerWithoutComment, header);
+
+    read_header_wo_comment_to_img(&img, headerWithoutComment);
 
     free(header);
-    fclose(fp);
+
     return img;
 }
 

@@ -51,7 +51,7 @@ typedef struct StringArray {
     int size;
 } StringArray;
 
-typedef  enum IMAGE_TYPE {
+typedef enum IMAGE_TYPE {
     P1 = 1,
     P2 = 2,
     P3 = 3,

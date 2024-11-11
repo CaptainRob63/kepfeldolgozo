@@ -13,7 +13,7 @@
 int main(int argc, char *argv[]) {
 
 
-    Matrix matrix = read_matrix(argv[1], argv[2], argv[3], argv[4]);
+    Matrix matrix = read_matrix("name", "2", "2", "1 2 3 4");
 
     printf("\nMatrix neve : %s\n", matrix.name);
     printf("matrix magassaga: %d\n",matrix.array.height);
@@ -31,7 +31,7 @@ int main(int argc, char *argv[]) {
 
     Img1Byte img;
     FILE* fp;
-    fp = fopen(argv[5],"rb");
+    fp = fopen("..\\imgs\\stop01.ppm","rb");
     if (fp == NULL) {
         perror("Error");
         printf("Error: %d (%s)\n", errno);
