@@ -29,7 +29,7 @@ int main(int argc, char *argv[]) {
 
     free(matrix.array.data);
 
-    Img1Byte img;
+    Image img;
     FILE* fp;
     fp = fopen("..\\imgs\\stop01.ppm","rb");
     if (fp == NULL) {
@@ -39,13 +39,15 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    img = read_image_1byte(fp);
+    img = read_image(fp);
 
     printf("\n\nheight : %d\nwidht : %d\nmaxval : %d\ntype : %d\n", img.height, img.width, img.maxValue, img.TYPE);
 
     string_array_print(&img.comments, "commentek");
 
     fclose(fp);
+
+
 
 return 0;
 

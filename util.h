@@ -60,6 +60,17 @@ typedef enum IMAGE_TYPE {
     P6 = 6,
 } IMAGE_TYPE;
 
+
+typedef struct Image {
+    IMAGE_TYPE TYPE;
+    unsigned short maxValue;
+    StringArray comments;
+    Pixel1Byte **array1;
+    Pixel2Byte **array2;
+    int height;
+    int width;
+} Image;
+
 typedef struct Img1Byte {
     IMAGE_TYPE TYPE;
     unsigned short maxValue;
@@ -78,7 +89,7 @@ typedef struct Img2Byte {
     int width;
 } Img2Byte;
 
-void img1B_free(Img1Byte *img);
+void img1B_free(Img1Byte *img);                             //TODO!!!
 void img2B_free(Img2Byte * img);
 
 

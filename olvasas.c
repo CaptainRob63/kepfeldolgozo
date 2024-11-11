@@ -65,6 +65,8 @@ Matrix read_matrix(const char *name, const char *height, const char *width,  con
 }
 
 
+
+
 Pixel1Byte read_pixel1Byte(char r, char g, char b) {
     Pixel1Byte pixel;
 
@@ -74,6 +76,9 @@ Pixel1Byte read_pixel1Byte(char r, char g, char b) {
 
     return pixel;
 }
+
+
+
 
 Pixel2Byte read_pixel2Byte(unsigned short r, unsigned short g, unsigned short b) {
     Pixel2Byte pixel;
@@ -85,6 +90,9 @@ Pixel2Byte read_pixel2Byte(unsigned short r, unsigned short g, unsigned short b)
     return pixel;
 }
 
+
+
+
 void file_step_till_whitespace(FILE* fp) {
     char byte;
     while(byte != '\n') {
@@ -93,9 +101,15 @@ void file_step_till_whitespace(FILE* fp) {
     }
 }
 
+
+
+
+
 // first counts header size, simultainously counting the number of comments.
 // then mallocs a header string, fills it and returns it.
-static char *read_header_to_string(Img1Byte *img, FILE* fp) {
+// leaves file pointer just before the bitmap.
+static char *read_header_to_string(Image *img, FILE* fp) {
+
     img->comments.size = 0;
     int whitespaceCount = 0;
     char currentByte = 0;
@@ -128,9 +142,11 @@ static char *read_header_to_string(Img1Byte *img, FILE* fp) {
 }
 
 
-// copied header string is mangled: it creates "parasitic" strings inside that copy, by changing the next newline after a hashmark to a terminating zero.
+
+
+// copies header string which is then mangled: it creates "parasitic" strings inside that copy, by changing the next newline after a hashmark to a terminating zero.
 // it then fills an array of strings with these "substrings", before actually copying them to the image structure.
-static void read_comments_array_to_img(Img1Byte *img, char *header) {
+static void read_comments_array_to_img(Image *img, char *header) {
     char *headerCopy = strcopy(header);
 
     StringArray tempComments;
@@ -166,8 +182,11 @@ static void read_comments_array_to_img(Img1Byte *img, char *header) {
 }
 
 
+
+
 // goes through a header string character by character, skipping over comments, and copying the rest.
 static void generate_header_without_comment(char *headerWithoutComment, char *header) {
+
     int i = 0;
     int j = 0;
     while(header[i] != '\0') {
@@ -182,8 +201,11 @@ static void generate_header_without_comment(char *headerWithoutComment, char *he
 
 }
 
+
+
+
 // header without comment can be trivially tokenized with newline characters as a delimiter.
-static void read_header_wo_comment_to_img(Img1Byte *img, char *headerWithoutComment) {
+static void read_header_wo_comment_to_img(Image *img, char *headerWithoutComment) {
     char *token;
 
     token = strtok(headerWithoutComment, " \t\n\v\f\r" );
@@ -200,9 +222,41 @@ static void read_header_wo_comment_to_img(Img1Byte *img, char *headerWithoutComm
 
 }
 
+
+
+
+static void read_bitmap_1byte(Image *img, FILE* fp) {
+    img->array1 = (Pixel1Byte**) malloc(img->width * img->height * sizeof(Pixel1Byte));
+    img->array2 = NULL;
+
+    for (int i = 0; i < img->height; ++i) {
+        for (int j = 0; j < img->width; ++j) {
+            fread(&img->array1[i][j].red, 1, 1, fp);
+            fread(&img->array1[i][j].green, 1, 1, fp);
+            fread(&img->array1[i][j].blue, 1, 1, fp);
+        }
+    }
+}
+
+static void read_bitmap_2byte(Image *img, FILE* fp) {
+    img->array2 = (Pixel2Byte**) malloc(img->width * img->height * sizeof(Pixel2Byte));
+    img->array1 = NULL;
+
+    for (int i = 0; i < img->height; ++i) {
+        for (int j = 0; j < img->width; ++j) {
+            fread(&img->array2[i][j].red, 2, 1, fp);
+            fread(&img->array2[i][j].green, 2, 1, fp);
+            fread(&img->array2[i][j].blue, 2, 1, fp);
+        }
+    }
+}
+
+
+
+
 // so simple! definitely did not take 5 hours to write !!! (◡‿◡✿)
-Img1Byte read_image_1byte(FILE* fp) {
-    Img1Byte img;
+Image read_image(FILE* fp) {
+    Image img;
 
     char *header = read_header_to_string(&img, fp);
 
@@ -215,6 +269,15 @@ Img1Byte read_image_1byte(FILE* fp) {
 
     free(header);
 
+    if (img.maxValue < 256)
+        read_bitmap_1byte(&img, fp);
+    else if (img.maxValue < 65536)
+        read_bitmap_2byte(&img, fp);
+    else
+        fprintf(stderr,"Incorrect maximum pixel brightness value read.");
+
     return img;
 }
+
+
 
