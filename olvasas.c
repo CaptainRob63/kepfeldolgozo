@@ -3,6 +3,7 @@
 //
 
 #include "olvasas.h"
+#include "debugmalloc.h"
 
 #include <ctype.h>
 #include <stdbool.h>
@@ -132,7 +133,7 @@ static char *read_header_to_string(Image *img, FILE* fp) {
     fseek(fp, 0, SEEK_SET);
 
 
-    char *header = (char*) malloc(headerSize * sizeof(char));
+    char *header = (char*) malloc((headerSize+1) * sizeof(char));
     for (int i = 0; i < headerSize; ++i) {
         fread(&header[i], 1, 1, fp);
     }
@@ -185,7 +186,7 @@ static void read_comments_array_to_img(Image *img, char *header) {
 
 
 // goes through a header string character by character, skipping over comments, and copying the rest.
-static void generate_header_without_comment(char *headerWithoutComment, char *header) {
+static void generate_header_without_comment(char *headerWithoutComment, const char *header) {
 
     int i = 0;
     int j = 0;
@@ -197,8 +198,6 @@ static void generate_header_without_comment(char *headerWithoutComment, char *he
         headerWithoutComment[j++] = header[i++];
     }
     headerWithoutComment[j] = '\0';
-
-
 }
 
 
@@ -221,13 +220,23 @@ static void read_header_wo_comment_to_img(Image *img, char *headerWithoutComment
     img->maxValue = atoi(token);
 
 }
+/*
+img->array1[0] = (Pixel1Byte*) malloc(img->width * img->height * sizeof(Pixel1Byte));
+if(img->array1[0] == NULL)
+    fprintf(stderr, "could not allocate bitmap");
+img->array1 = (Pixel1Byte**) malloc(img->height * sizeof(Pixel1Byte*));
 
-
-
+for (int i = 1; i < img->height; ++i) {
+    img->array1[i] = img->array1[0] + i * img->height;
+}
+img->array2 = NULL;
+*/
 
 static void read_bitmap_1byte(Image *img, FILE* fp) {
-    img->array1 = (Pixel1Byte**) malloc(img->width * img->height * sizeof(Pixel1Byte));
-    img->array2 = NULL;
+    img->array1 = (Pixel1Byte**) malloc(img->height * sizeof(Pixel1Byte*));
+    for (int i = 0; i < img->height; ++i) {
+        img->array1[i] = (Pixel1Byte*) malloc(img->width * sizeof(Pixel1Byte));
+    }
 
     for (int i = 0; i < img->height; ++i) {
         for (int j = 0; j < img->width; ++j) {
@@ -239,7 +248,15 @@ static void read_bitmap_1byte(Image *img, FILE* fp) {
 }
 
 static void read_bitmap_2byte(Image *img, FILE* fp) {
-    img->array2 = (Pixel2Byte**) malloc(img->width * img->height * sizeof(Pixel2Byte));
+    img->array2[0] = (Pixel2Byte*) malloc(img->width * img->height * sizeof(Pixel2Byte));
+    if(img->array2[0] == NULL)
+        fprintf(stderr, "could not allocate bitmap");
+    img->array2 = (Pixel2Byte**) malloc(img->height * sizeof(Pixel2Byte*));
+    
+    for (int i = 1; i < img->height; ++i) {
+        img->array2[i] = img->array2[0] + i * img->height;
+    }
+
     img->array1 = NULL;
 
     for (int i = 0; i < img->height; ++i) {

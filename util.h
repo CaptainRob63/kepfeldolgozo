@@ -7,9 +7,9 @@
 
 
 typedef struct Pixel1Byte {
-    char red;
-    char green;
-    char blue;
+    unsigned char red;
+    unsigned char green;
+    unsigned char blue;
 } Pixel1Byte;
 
 typedef struct Pixel2Byte {

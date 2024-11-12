@@ -7,16 +7,17 @@
 #include "olvasas.h"
 #include "util.h"
 #include "iras.h"
+#include "debugmalloc.h"
 
 
 
 int main(int argc, char *argv[]) {
 
-
+/*
     Matrix matrix = read_matrix("name", "2", "2", "1 2 3 4");
 
     printf("\nMatrix neve : %s\n", matrix.name);
-    printf("matrix magassaga: %d\n",matrix.array.height);
+   printf("matrix magassaga: %d\n",matrix.array.height);
     printf("matrix szelessege: %d\n", matrix.array.width);
 
     printf("matrix adat: ");
@@ -28,7 +29,7 @@ int main(int argc, char *argv[]) {
 
 
     free(matrix.array.data);
-
+*/
     Image img;
     FILE* fp;
     fp = fopen("..\\imgs\\stop01.ppm","rb");
@@ -39,11 +40,20 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
+
+
     img = read_image(fp);
 
     printf("\n\nheight : %d\nwidht : %d\nmaxval : %d\ntype : %d\n", img.height, img.width, img.maxValue, img.TYPE);
 
     string_array_print(&img.comments, "commentek");
+
+    for (int i = 0; i < 10; ++i) {
+        for (int j = 0; j < 10; ++j) {
+            printf("%d %d %d    ", img.array1[i][j].red, img.array1[i][j].green, img.array1[i][j].red);
+        }
+        printf("\n");
+    }
 
     fclose(fp);
 

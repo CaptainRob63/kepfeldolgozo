@@ -5,6 +5,7 @@
 #include <string.h>
 
 #include "util.h"
+#include "debugmalloc.h"
 
 #include <stdio.h>
 #include <wchar.h>
