@@ -5,44 +5,21 @@
 #ifndef UTIL_H
 #define UTIL_H
 
+#include <stdint.h>
+
+
 
 typedef struct Pixel1Byte {
-    unsigned char red;
-    unsigned char green;
-    unsigned char blue;
+    uint8_t red;
+    uint8_t green;
+    uint8_t blue;
 } Pixel1Byte;
 
 typedef struct Pixel2Byte {
-    unsigned short red;
-    unsigned short green;
-    unsigned short blue;
+    uint16_t red;
+    uint16_t green;
+    uint16_t blue;
 }Pixel2Byte;
-
-
-
-typedef struct ArrayPixel1Byte {
-    Pixel1Byte *data;
-    int size;
-} ArrayPixel1Byte;
-
-typedef struct ArrayPixel2Byte {
-    Pixel2Byte *data;
-    int size;
-} ArrayPixel2Byte;
-
-
-
-typedef struct Array2DPixel1Byte {
-    Pixel1Byte **data;
-    int height;
-    int width;
-} Array2DPixel1Byte;
-
-typedef struct Array2DPixel2Byte {
-    Pixel2Byte **data;
-    int height;
-    int width;
-} Array2DPixel2Byte;
 
 
 
@@ -63,7 +40,7 @@ typedef enum IMAGE_TYPE {
 
 typedef struct Image {
     IMAGE_TYPE TYPE;
-    unsigned short maxValue;
+    uint16_t maxValue;
     StringArray comments;
     Pixel1Byte **array1;
     Pixel2Byte **array2;
@@ -71,27 +48,9 @@ typedef struct Image {
     int width;
 } Image;
 
-typedef struct Img1Byte {
-    IMAGE_TYPE TYPE;
-    unsigned short maxValue;
-    StringArray comments;
-    Array2DPixel1Byte array;
-    int height;
-    int width;
-} Img1Byte;
 
-typedef struct Img2Byte {
-    IMAGE_TYPE TYPE;
-    unsigned short maxValue;
-    StringArray comments;
-    Array2DPixel2Byte array;
-    int height;
-    int width;
-} Img2Byte;
 
-void img1B_free(Img1Byte *img);                             //TODO!!!
-void img2B_free(Img2Byte * img);
-
+void img_free(Image img);
 
 
 
