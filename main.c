@@ -13,7 +13,7 @@
 
 int main(int argc, char *argv[]) {
 
-/*
+
     Matrix matrix = read_matrix("name", "2", "2", "1 2 3 4");
 
     printf("\nMatrix neve : %s\n", matrix.name);
@@ -26,10 +26,9 @@ int main(int argc, char *argv[]) {
             printf("%lf ", matrix.array.data[i][j]);
     printf("\n");
 
+    matrix_free(&matrix);
 
 
-    free(matrix.array.data);
-*/
     Image img;
     FILE* fp;
     fp = fopen("..\\imgs\\stop01.ppm","rb");
@@ -55,6 +54,7 @@ int main(int argc, char *argv[]) {
         printf("\n");
     }
 
+    image_free(&img);
     fclose(fp);
 
 

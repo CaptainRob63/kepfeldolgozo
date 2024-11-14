@@ -50,7 +50,7 @@ typedef struct Image {
 
 
 
-void img_free(Image img);
+
 
 
 
@@ -76,6 +76,11 @@ void string_array_print(StringArray *strArr, char *name);
 void string_array_free(StringArray *strArr);
 
 char *strcopy(const char *orig);
+
+
+void image_free(Image *img);
+
+void matrix_free(Matrix *matrix);
 
 
 #endif //UTIL_H

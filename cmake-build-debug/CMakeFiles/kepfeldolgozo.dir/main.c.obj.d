@@ -29,10 +29,12 @@ CMakeFiles/kepfeldolgozo.dir/main.c.obj: \
  C:/Program\ Files/JetBrains/CLion\ 2024.2.1/bin/mingw/x86_64-w64-mingw32/include/sec_api/wchar_s.h \
  C:\Users\R\CLionProjects\kepfeldolgozo\olvasas.h \
  C:\Users\R\CLionProjects\kepfeldolgozo\util.h \
- C:\Users\R\CLionProjects\kepfeldolgozo\iras.h \
- C:\Users\R\CLionProjects\kepfeldolgozo\debugmalloc.h \
+ C:/Program\ Files/JetBrains/CLion\ 2024.2.1/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/stdint.h \
+ C:/Program\ Files/JetBrains/CLion\ 2024.2.1/bin/mingw/x86_64-w64-mingw32/include/stdint.h \
  C:/Program\ Files/JetBrains/CLion\ 2024.2.1/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/stddef.h \
  C:/Program\ Files/JetBrains/CLion\ 2024.2.1/bin/mingw/x86_64-w64-mingw32/include/stddef.h \
+ C:\Users\R\CLionProjects\kepfeldolgozo\iras.h \
+ C:\Users\R\CLionProjects\kepfeldolgozo\debugmalloc.h \
  C:/Program\ Files/JetBrains/CLion\ 2024.2.1/bin/mingw/x86_64-w64-mingw32/include/ctype.h \
  C:/Program\ Files/JetBrains/CLion\ 2024.2.1/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/stdarg.h \
  C:/Program\ Files/JetBrains/CLion\ 2024.2.1/bin/mingw/x86_64-w64-mingw32/include/stdarg.h \

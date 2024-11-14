@@ -68,32 +68,6 @@ Matrix read_matrix(const char *name, const char *height, const char *width,  con
 
 
 
-Pixel1Byte read_pixel1Byte(char r, char g, char b) {
-    Pixel1Byte pixel;
-
-    pixel.red = r;
-    pixel.green = g;
-    pixel.blue = b;
-
-    return pixel;
-}
-
-
-
-
-Pixel2Byte read_pixel2Byte(unsigned short r, unsigned short g, unsigned short b) {
-    Pixel2Byte pixel;
-
-    pixel.red = r;
-    pixel.green = g;
-    pixel.blue = b;
-
-    return pixel;
-}
-
-
-
-
 void file_step_till_whitespace(FILE* fp) {
     char byte;
     while(byte != '\n') {
@@ -220,24 +194,15 @@ static void read_header_wo_comment_to_img(Image *img, char *headerWithoutComment
     img->maxValue = atoi(token);
 
 }
-/*
-img->array1[0] = (Pixel1Byte*) malloc(img->width * img->height * sizeof(Pixel1Byte));
-if(img->array1[0] == NULL)
-    fprintf(stderr, "could not allocate bitmap");
-img->array1 = (Pixel1Byte**) malloc(img->height * sizeof(Pixel1Byte*));
 
-for (int i = 1; i < img->height; ++i) {
-    img->array1[i] = img->array1[0] + i * img->height;
-}
-img->array2 = NULL;
-*/
 
 static void read_bitmap_1byte(Image *img, FILE* fp) {
     img->array1 = (Pixel1Byte**) malloc(img->height * sizeof(Pixel1Byte*));
-    for (int i = 0; i < img->height; ++i) {
+    for (int i = 0; i < img->height; ++i) 
         img->array1[i] = (Pixel1Byte*) malloc(img->width * sizeof(Pixel1Byte));
-    }
 
+    img->array2 = NULL;
+    
     for (int i = 0; i < img->height; ++i) {
         for (int j = 0; j < img->width; ++j) {
             fread(&img->array1[i][j].red, 1, 1, fp);
@@ -248,14 +213,9 @@ static void read_bitmap_1byte(Image *img, FILE* fp) {
 }
 
 static void read_bitmap_2byte(Image *img, FILE* fp) {
-    img->array2[0] = (Pixel2Byte*) malloc(img->width * img->height * sizeof(Pixel2Byte));
-    if(img->array2[0] == NULL)
-        fprintf(stderr, "could not allocate bitmap");
     img->array2 = (Pixel2Byte**) malloc(img->height * sizeof(Pixel2Byte*));
-    
-    for (int i = 1; i < img->height; ++i) {
-        img->array2[i] = img->array2[0] + i * img->height;
-    }
+    for (int i = 0; i < img->height; ++i) 
+        img->array2[i] = (Pixel2Byte*) malloc(img->width * sizeof(Pixel2Byte));
 
     img->array1 = NULL;
 
