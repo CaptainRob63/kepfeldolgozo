@@ -11,11 +11,10 @@
 #include <wchar.h>
 
 
-// basic string copier. Returns mallocated string. Caller must free.
-// alap string másoló. Visszatér egy dinamikusan allokált stringgel. Hívónak felelőssége felszabadítani.
-
 char *strcopy(const char *orig) {
     char *copy = (char*) malloc(strlen(orig) * sizeof(char));
+    if (copy == NULL)
+        return NULL;
     for (int i = 0; orig[i] != '\0'; i++)
         copy[i] = orig[i];
     return copy;

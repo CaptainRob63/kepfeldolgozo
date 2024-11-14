@@ -75,8 +75,9 @@ void string_array_print(StringArray *strArr, char *name);
 
 void string_array_free(StringArray *strArr);
 
+// basic string copier. Returns mallocated string. Caller must free. returns NULL if failed.
+// alap string másoló. Visszatér egy dinamikusan allokált stringgel. Hívónak felelőssége felszabadítani. NULL pointerrel tér vissza ha sikertelen a foglalás.
 char *strcopy(const char *orig);
-
 
 void image_free(Image *img);
 

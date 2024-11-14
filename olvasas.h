@@ -9,14 +9,15 @@
 #ifndef OLVASAS_H
 #define OLVASAS_H
 
-// Initializes a matrix. Arguments are just argv[].
+// Initializes a matrix. Arguments are strings.
 // Data is copied to matrix with a buffer string that is tokenized.
 
-// Inicializál egy mátrix struktúrát. Argumentumai stringek, így argv[] elemei egyszerűen átadhatók neki.
+// Inicializál egy mátrix struktúrát. Argumentumai stringek.
 // Data először egy bufferbe másolva stringként, majd tokenizálással olvasva doubleként.
 Matrix read_matrix(const char *name, const char *height, const char *width, const char *data);
 
-Image read_image (FILE* fp);                                                           // takes a filestream and returns a filled Img1Byte structure containing all image data.
+// takes a filestream and returns a filled Image structure containing all image data.
+Image read_image (FILE* fp);
 
 
 

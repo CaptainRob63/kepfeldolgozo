@@ -4,3 +4,6 @@
 
 #include "iras.h"
 
+void write_matrix(Matrix *matrix) {
+
+}
