@@ -14,7 +14,7 @@
 int main(int argc, char *argv[]) {
 
 
-    Matrix matrix = read_matrix("name", "2", "2", "1 2 3 4");
+    Matrix matrix = read_matrix("naame", "2", "2", "1 2 3 4");
 
     printf("\nMatrix neve : %s\n", matrix.name);
    printf("matrix magassaga: %d\n",matrix.array.height);
@@ -26,9 +26,13 @@ int main(int argc, char *argv[]) {
             printf("%lf ", matrix.array.data[i][j]);
     printf("\n");
 
+    FILE *fp = fopen("matrix.txt", "a");
+
+    write_matrix(&matrix, fp);
+
     matrix_free(&matrix);
 
-
+/*
     Image img;
     FILE* fp;
     fp = fopen("..\\imgs\\stop01.ppm","rb");
@@ -56,7 +60,7 @@ int main(int argc, char *argv[]) {
 
     image_free(&img);
     fclose(fp);
-
+*/
 
 
 return 0;

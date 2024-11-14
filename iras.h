@@ -3,6 +3,7 @@
 //
 #pragma once
 
+#include <stdio.h>
 #include "util.h"
 
 
@@ -10,7 +11,7 @@
 #define IRAS_H
 
 
-void write_matrix(Matrix *matrix);
+void write_matrix(Matrix *matrix, FILE *fp);
 
 void write_image(Image *image);
 
