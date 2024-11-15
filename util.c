@@ -12,12 +12,21 @@
 
 
 char *strcopy(const char *orig) {
-    char *copy = (char*) malloc(strlen(orig) * sizeof(char));
+    unsigned int orig_length  = strlen(orig);
+    char *copy = (char*) malloc(orig_length * sizeof(char));
     if (copy == NULL)
         return NULL;
     for (int i = 0; orig[i] != '\0'; i++)
         copy[i] = orig[i];
+    copy[orig_length] = '\0';
+
     return copy;
+}
+
+void str_newline_to_zero(char *str) {
+    for (int i = 0; str[i] != '\0' ; ++i)
+        if (str[i] == '\n')
+            str[i] = '\0';
 }
 
 
@@ -62,3 +71,28 @@ void matrix_free(Matrix *matrix) {
     free(matrix->array.data[0]);
     free(matrix->array.data);
 }
+
+
+int8_t matrix_find_in_file(const char *name, FILE *fp) {
+    char c = '\0';
+    char currentName[32];
+
+    while(c != EOF) {
+        c = fgetc(fp);
+        if (c == '#') {
+            fgets(currentName, 32, fp);
+
+            str_newline_to_zero(currentName);
+
+            if (currentName == NULL)
+                return -1;
+
+            if(strcmp(currentName, name) == 0)
+                return 1;
+
+        }
+    }
+
+    return 0;
+}
+

@@ -13,11 +13,13 @@
 
 int main(int argc, char *argv[]) {
 
+/*
+    //Matrix matrix = read_matrix("naame", "2", "2", "1 2 3 4");
+    Matrix matrix = read_matrix(argv[1], argv[2], argv[3], argv[4]);
 
-    Matrix matrix = read_matrix("naame", "2", "2", "1 2 3 4");
 
     printf("\nMatrix neve : %s\n", matrix.name);
-   printf("matrix magassaga: %d\n",matrix.array.height);
+    printf("matrix magassaga: %d\n",matrix.array.height);
     printf("matrix szelessege: %d\n", matrix.array.width);
 
     printf("matrix adat: ");
@@ -25,12 +27,19 @@ int main(int argc, char *argv[]) {
         for(int j = 0; j < matrix.array.width; j++)
             printf("%lf ", matrix.array.data[i][j]);
     printf("\n");
+*/
+    FILE *fp = fopen("matrix.txt", "r");
 
-    FILE *fp = fopen("matrix.txt", "a");
 
-    write_matrix(&matrix, fp);
 
-    matrix_free(&matrix);
+    if (matrix_find_in_file("asd", fp) == 1) {
+        int asd = fgetc(fp);
+        printf("%c", asd);
+    }
+
+
+    //matrix_free(&matrix);
+    fclose(fp);
 
 /*
     Image img;

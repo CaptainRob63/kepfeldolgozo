@@ -5,8 +5,9 @@
 #ifndef UTIL_H
 #define UTIL_H
 
+#include <stdbool.h>
 #include <stdint.h>
-
+#include <stdio.h>
 
 
 typedef struct Pixel1Byte {
@@ -82,6 +83,8 @@ char *strcopy(const char *orig);
 void image_free(Image *img);
 
 void matrix_free(Matrix *matrix);
+
+int8_t matrix_find_in_file(const char *name, FILE *fp);
 
 
 #endif //UTIL_H

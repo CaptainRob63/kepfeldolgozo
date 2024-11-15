@@ -65,6 +65,20 @@ Matrix read_matrix(const char *name, const char *height, const char *width,  con
     return matrix;
 }
 
+Matrix read_matrix_from_file(const char *name, FILE *fp) {
+    char *width[2],
+         *heigth[2];
+    fgets(width, 2, fp);
+    fgets(heigth, 2, fp);
+
+    char *array = (char*) malloc(atoi(width) * atoi(heigth) * sizeof(char));
+
+    fgets()
+
+    free(array);
+    return matrix;
+}
+
 
 
 

@@ -14,13 +14,13 @@ void write_matrix(Matrix *matrix, FILE *fp) {
     sprintf(width, "%d", matrix->array.width);
     sprintf(height, "%d", matrix->array.height);
 
-    fprintf(fp,"# %s\n%s %s\n", matrix->name, width, height);
+    fprintf(fp,"#%s\n%s %s\n", matrix->name, width, height);
 
     char number[100+1];
     for (int i = 0; i < matrix->array.height; ++i) {
         for (int j = 0; j < matrix->array.width; ++j)
-            fprintf(fp, "%lf ", matrix->array.data[j][i]);
-        printf("\n");
+            fprintf(fp, "%g ", matrix->array.data[j][i]);
+        printf(" \n");
     }
     fprintf(fp, "\n\n");
 }

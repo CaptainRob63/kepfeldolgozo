@@ -16,6 +16,8 @@
 // Data először egy bufferbe másolva stringként, majd tokenizálással olvasva doubleként.
 Matrix read_matrix(const char *name, const char *height, const char *width, const char *data);
 
+Matrix read_matrix_from_file(const char *name ,FILE *fp);
+
 // takes a filestream and returns a filled Image structure containing all image data.
 Image read_image (FILE* fp);
 
