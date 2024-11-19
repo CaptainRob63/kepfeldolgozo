@@ -12,10 +12,12 @@
 
 
 char *strcopy(const char *orig) {
-    unsigned int orig_length  = strlen(orig);
-    char *copy = (char*) malloc(orig_length * sizeof(char));
+    int orig_length  = strlen(orig);
+
+    char *copy = (char*) malloc((orig_length + 1) * sizeof(char));
     if (copy == NULL)
         return NULL;
+
     for (int i = 0; orig[i] != '\0'; i++)
         copy[i] = orig[i];
     copy[orig_length] = '\0';

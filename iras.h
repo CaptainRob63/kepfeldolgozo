@@ -11,7 +11,7 @@
 #define IRAS_H
 
 
-void write_matrix(Matrix *matrix, FILE *fp);
+void write_matrix(const Matrix *matrix, FILE *fp);
 
 void write_image(Image *image);
 
