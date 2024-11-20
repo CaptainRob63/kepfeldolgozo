@@ -81,13 +81,14 @@ Matrix read_matrix_from_file(const char *name, FILE *fp) {
 
     matrix.array.data = (double**) malloc(matrix.array.height * sizeof(double*));
     matrix.array.data[0] = (double*) malloc(matrix.array.height * matrix.array.width * sizeof(double));
+
     for (int i = 0; i < matrix.array.height; ++i) {
         matrix.array.data[i] = matrix.array.data[0] + matrix.array.width * i;
     }
 
     for (int i = 0; i < matrix.array.height; ++i) {
         for (int j = 0; j < matrix.array.width; ++j) {
-            fscanf(fp, "%u", &matrix.array.data[i][j]);
+            fscanf(fp, "%lf ", &matrix.array.data[i][j]);
         }
     }
 

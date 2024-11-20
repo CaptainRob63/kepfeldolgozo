@@ -14,13 +14,14 @@
 int main(int argc, char *argv[]) {
 
 
-    //Matrix matrix = read_matrix("naame", "3", "4", "1 2 3 4 5 6 7 8 9 10 11 12");
+    Matrix matrix = read_matrix("asdasdasd", "4", "4", "1 2 3 4 5 6 7 8 9 10 11 12");
     //Matrix matrix = read_matrix(argv[1], argv[2], argv[3], argv[4]);
 
 
-    FILE *fp = fopen("matrix.txt", "r+");
+    FILE *fp = fopen("matrix.txt", "a");
 
-    Matrix matrix = read_matrix_from_file("naame", fp);
+    //Matrix matrix = read_matrix_from_file("asd", fp);
+
     printf("%s\n", matrix.name);
     printf("%u %u", matrix.array.width, matrix.array.height);
 

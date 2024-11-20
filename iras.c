@@ -10,13 +10,12 @@
 
 void write_matrix(const Matrix *matrix, FILE *fp) {
 
-    char width[2], height[2];
+    char width[3], height[3];
     sprintf(width, "%u", matrix->array.width);
     sprintf(height, "%u", matrix->array.height);
 
     fprintf(fp,"#%s\n%s %s\n", matrix->name, width, height);
 
-    char number[100+1];
     for (int i = 0; i < matrix->array.height; ++i) {
         for (int j = 0; j < matrix->array.width; ++j)
             fprintf(fp, "%g ", matrix->array.data[i][j]);
