@@ -62,8 +62,8 @@ typedef struct ArrayDouble {
 
 typedef struct Array2Ddouble {
     double **data;
-    uint8_t height;
-    uint8_t width;
+    unsigned int height;
+    unsigned int width;
 } Array2Ddouble;
 
 typedef struct Matrix {

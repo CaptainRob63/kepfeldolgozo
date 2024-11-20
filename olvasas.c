@@ -69,9 +69,14 @@ Matrix read_matrix_from_file(const char *name, FILE *fp) {
     Matrix matrix;
     matrix_find_in_file(name, fp);
 
+    strcpy(matrix.name, name);
+
     char buffer[32];
 
-    fgets(buffer, 32, fp);
+    //fgets(buffer, 32, fp);
+
+    fscanf(fp,"%u %u", &matrix.array.width, &matrix.array.height);
+
 
 
     matrix.array.data = (double**) malloc(matrix.array.height * sizeof(double*));
@@ -82,8 +87,7 @@ Matrix read_matrix_from_file(const char *name, FILE *fp) {
 
     for (int i = 0; i < matrix.array.height; ++i) {
         for (int j = 0; j < matrix.array.width; ++j) {
-            fgets(buffer, 32, fp);
-            matrix.array.data[i][j] = atof(buffer);
+            fscanf(fp, "%u", &matrix.array.data[i][j]);
         }
     }
 

@@ -11,8 +11,8 @@
 void write_matrix(const Matrix *matrix, FILE *fp) {
 
     char width[2], height[2];
-    sprintf(width, "%d", matrix->array.width);
-    sprintf(height, "%d", matrix->array.height);
+    sprintf(width, "%u", matrix->array.width);
+    sprintf(height, "%u", matrix->array.height);
 
     fprintf(fp,"#%s\n%s %s\n", matrix->name, width, height);
 

@@ -18,9 +18,11 @@ int main(int argc, char *argv[]) {
     //Matrix matrix = read_matrix(argv[1], argv[2], argv[3], argv[4]);
 
 
-    FILE *fp = fopen("matrix.txt", "r");
+    FILE *fp = fopen("matrix.txt", "r+");
 
     Matrix matrix = read_matrix_from_file("naame", fp);
+    printf("%s\n", matrix.name);
+    printf("%u %u", matrix.array.width, matrix.array.height);
 
     write_matrix(&matrix, fp);
     matrix_free(&matrix);
