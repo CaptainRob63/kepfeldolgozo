@@ -14,16 +14,23 @@
 int main(int argc, char *argv[]) {
 
 
-    Matrix matrix = read_matrix("asdasdasd", "4", "4", "1 2 3 4 5 6 7 8 9 10 11 12");
+    Matrix matrix = read_matrix("asdasdasd", "4", "3", "1 2 3 4 5 6 7 8 9 10 11");
     //Matrix matrix = read_matrix(argv[1], argv[2], argv[3], argv[4]);
+    MATRIX_ERROR mtxError = matrix_check_error(matrix);
+    matrix_write_error(mtxError);
+    if (mtxError != MATERR_NONE) {
+        return 1;
+    }
+
+
 
 
     FILE *fp = fopen("matrix.txt", "a");
 
     //Matrix matrix = read_matrix_from_file("asd", fp);
 
-    printf("%s\n", matrix.name);
-    printf("%u %u", matrix.array.width, matrix.array.height);
+    //printf("%s\n", matrix.name);
+    //printf("%u %u", matrix.array.width, matrix.array.height);
 
     write_matrix(&matrix, fp);
     matrix_free(&matrix);

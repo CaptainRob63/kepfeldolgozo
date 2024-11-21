@@ -98,3 +98,34 @@ int8_t matrix_find_in_file(const char *name, FILE *fp) {
     return 0;
 }
 
+MATRIX_ERROR matrix_check_error(Matrix matrix) {
+    if (strlen(matrix.name) == 0)
+        return MATERR_NAME;
+    if (matrix.array.width == 0)
+        return MATERR_WIDTH;
+    if (matrix.array.height == 0)
+        return MATERR_HEIGHT;
+    if (matrix.array.data == NULL)
+        return MATERR_ARRAY;
+    return MATERR_NONE;
+}
+
+void matrix_write_error(MATRIX_ERROR Error) {
+    switch (Error) {
+        case MATERR_NAME : fprintf(stderr, "Matrix name error.");
+            break;
+
+        case MATERR_WIDTH : fprintf(stderr, "Matrix width error.");
+            break;
+
+        case MATERR_HEIGHT : fprintf(stderr, "Matrix height error.");
+            break;
+
+        case MATERR_ARRAY : fprintf(stderr, "Matrix array error.");
+            break;
+
+        case MATERR_NONE : fprintf(stderr, "Matrix OK.");
+            break;
+    }
+    fprintf(stderr, "\n");
+}

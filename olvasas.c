@@ -29,22 +29,30 @@
 Matrix read_matrix(const char *name, const char *height, const char *width,  const char *data) {
     Matrix matrix;
 
-    for (int i = 0; i < 32; i++)
-        matrix.name[i] = '\0';
+    if (strlen(name) > 31) {
+        strcpy(matrix.name, "\0");
+        return matrix;
+    }
+    strcpy(matrix.name, name);
 
-    for (int i = 0; name[i] != '\0'; i++) {
-        matrix.name[i] = name[i];
-        SHOW("copied 1 char to matrix name\n");
+    matrix.array.height = atoi(height);
+    matrix.array.width = atoi(width);
+    SHOW("set matrix height and width\n");
+
+    if(matrix.array.height > 15 | matrix.array.width > 15) {
+        matrix.array.height = 0;
+        matrix.array.width = 0;
+        return matrix;
     }
 
 
-    matrix.array.height = atof(height);
-    matrix.array.width = atof(width);
-    SHOW("set matrix height and width\n");
-
-
     matrix.array.data = (double**) malloc(matrix.array.height * sizeof(double));
+    if (matrix.array.data == NULL)
+        return matrix;
+
     matrix.array.data[0] = (double*) malloc(matrix.array.width * matrix.array.height * sizeof(double));
+    if (matrix.array.data[0] == NULL)
+        return matrix;
 
     for (int i = 0; i < matrix.array.height; i++)
         matrix.array.data[i] = matrix.array.data[0] + i * matrix.array.width;
@@ -56,10 +64,18 @@ Matrix read_matrix(const char *name, const char *height, const char *width,  con
 
     for (int i = 0; i < matrix.array.height; i++) {
         for (int j = 0; j <matrix.array.width; j++) {
+
+            if (tok == NULL) {
+                matrix.array.data = NULL;
+                return matrix;
+            }
+
             matrix.array.data[i][j] = atof(tok);
+
             tok = strtok(NULL, " ");
         }
     }
+
     free(databuffer);
 
     return matrix;
@@ -76,8 +92,6 @@ Matrix read_matrix_from_file(const char *name, FILE *fp) {
     //fgets(buffer, 32, fp);
 
     fscanf(fp,"%u %u", &matrix.array.width, &matrix.array.height);
-
-
 
     matrix.array.data = (double**) malloc(matrix.array.height * sizeof(double*));
     matrix.array.data[0] = (double*) malloc(matrix.array.height * matrix.array.width * sizeof(double));

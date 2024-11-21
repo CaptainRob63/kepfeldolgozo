@@ -71,6 +71,14 @@ typedef struct Matrix {
     char name[32];
 } Matrix;
 
+typedef enum MATRIX_ERROR {
+    MATERR_NONE,
+    MATERR_NAME,
+    MATERR_WIDTH,
+    MATERR_HEIGHT,
+    MATERR_ARRAY
+} MATRIX_ERROR;
+
 
 void string_array_print(StringArray *strArr, char *name);
 
@@ -85,6 +93,10 @@ void image_free(Image *img);
 void matrix_free(Matrix *matrix);
 
 int8_t matrix_find_in_file(const char *name, FILE *fp);
+
+MATRIX_ERROR matrix_check_error(Matrix matrix);
+
+void matrix_write_error(MATRIX_ERROR Error);
 
 
 #endif //UTIL_H
