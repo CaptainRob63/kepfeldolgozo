@@ -13,6 +13,6 @@
 
 void write_matrix(const Matrix *matrix, FILE *fp);
 
-void write_image(Image *image);
+void write_image_P6(const Image *img, FILE *fp);
 
 #endif //IRAS_H

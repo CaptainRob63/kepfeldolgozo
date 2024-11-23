@@ -23,3 +23,31 @@ void write_matrix(const Matrix *matrix, FILE *fp) {
     }
     fprintf(fp, "\n\n");
 }
+
+void write_image_P6(const Image *img, FILE *fp) {
+    char ws = '\0';
+    fputs("P6",fp);
+
+    fwrite(&ws, 1, 1, fp);
+
+    for (int i = 0; i < img->comments.size; ++i) {
+        fputs(img->comments.data[i], fp);
+    }
+
+    fwrite(&ws, 1, 1, fp);
+
+    char width[16], height[16], maxVal[16];
+    itoa(img->width, width, 16);
+    itoa(img->height, height, 16);
+    itoa(img->maxValue, maxVal, 16);
+
+    fputs(width, fp);
+    fwrite(&ws, 1, 1, fp);
+
+    fputs(height, fp);
+    fwrite(&ws, 1, 1, fp);
+
+    fputs(maxVal, fp);
+    fwrite(&ws, 1, 1, fp);
+
+}

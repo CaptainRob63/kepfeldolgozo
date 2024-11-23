@@ -41,6 +41,7 @@ typedef enum IMAGE_TYPE {
 
 typedef struct Image {
     IMAGE_TYPE TYPE;
+    char* name;
     uint16_t maxValue;
     StringArray comments;
     Pixel1Byte **array1;

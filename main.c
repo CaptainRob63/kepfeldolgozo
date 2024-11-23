@@ -13,8 +13,26 @@
 
 int main(int argc, char *argv[]) {
 
+    Image img;
+    FILE* fp;
+    fp = fopen("..\\imgs\\stop01.ppm","rb");
+    if (fp == NULL) {
+        perror("Error");
+        printf("Error: %d (%s)\n", errno);
+        strerror(errno);
+        return 1;
+    }
 
-    Matrix matrix = read_matrix("asdasdasd", "4", "3", "1 2 3 4 5 6 7 8 9 10 11");
+    img = read_image(fp);
+    fclose(fp);
+
+    fp = fopen("img.ppm", "wb");
+
+    write_image_P6(&img, fp);
+
+    image_free(&img);
+/*
+    Matrix matrix = read_matrix("asdasdasd", "4", "3", "1 2 3 4 5 6 7 8 9 10 11 12");
     //Matrix matrix = read_matrix(argv[1], argv[2], argv[3], argv[4]);
     MATRIX_ERROR mtxError = matrix_check_error(matrix);
     matrix_write_error(mtxError);
@@ -35,21 +53,9 @@ int main(int argc, char *argv[]) {
     write_matrix(&matrix, fp);
     matrix_free(&matrix);
     fclose(fp);
-
+*/
 /*
-    Image img;
-    FILE* fp;
-    fp = fopen("..\\imgs\\stop01.ppm","rb");
-    if (fp == NULL) {
-        perror("Error");
-        printf("Error: %d (%s)\n", errno);
-        strerror(errno);
-        return 1;
-    }
 
-
-
-    img = read_image(fp);
 
     printf("\n\nheight : %d\nwidht : %d\nmaxval : %d\ntype : %d\n", img.height, img.width, img.maxValue, img.TYPE);
 
