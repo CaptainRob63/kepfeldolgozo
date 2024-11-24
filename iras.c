@@ -8,6 +8,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
+
 void write_matrix(const Matrix *matrix, FILE *fp) {
 
     char width[3], height[3];
@@ -24,30 +26,42 @@ void write_matrix(const Matrix *matrix, FILE *fp) {
     fprintf(fp, "\n\n");
 }
 
+
+
 void write_image_P6(const Image *img, FILE *fp) {
-    char ws = '\0';
     fputs("P6",fp);
 
-    fwrite(&ws, 1, 1, fp);
+    fwrite("\n", 1, 1, fp);
 
     for (int i = 0; i < img->comments.size; ++i) {
         fputs(img->comments.data[i], fp);
     }
 
-    fwrite(&ws, 1, 1, fp);
+    fwrite("\n", 1, 1, fp);
 
-    char width[16], height[16], maxVal[16];
-    itoa(img->width, width, 16);
-    itoa(img->height, height, 16);
-    itoa(img->maxValue, maxVal, 16);
+    fprintf(fp, "%d %d\n%d\n", img->width, img->height, img->maxValue);
 
-    fputs(width, fp);
-    fwrite(&ws, 1, 1, fp);
+    // print 1byte bitmap
+    if (img->array1 != NULL) {
+        for (int i = 0; i < img->height; ++i) {
+            for (int j = 0; j < img->width; ++j) {
+                fwrite(&img->array1[i][j].red,   1, 1, fp);
+                fwrite(&img->array1[i][j].green, 1, 1, fp);
+                fwrite(&img->array1[i][j].blue,  1, 1, fp);
+            }
+        }
+    }
 
-    fputs(height, fp);
-    fwrite(&ws, 1, 1, fp);
+    // print 2byte bitmap
+    if (img->array2 != NULL) {
+        for (int i = 0; i < img->height; ++i) {
+            for (int j = 0; j < img->width; ++j) {
+                fwrite(&img->array2[i][j].red,   2, 1, fp);
+                fwrite(&img->array2[i][j].green, 2, 1, fp);
+                fwrite(&img->array2[i][j].blue,  2, 1, fp);
+            }
+        }
+    }
 
-    fputs(maxVal, fp);
-    fwrite(&ws, 1, 1, fp);
 
 }
