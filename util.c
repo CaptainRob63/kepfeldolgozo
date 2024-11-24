@@ -52,9 +52,12 @@ void string_array_free(StringArray *strArr) {
 
 
 void image_free(Image *img) {
-    for (int i = 0; i < img->comments.size; ++i)
-        free(img->comments.data[i]);
-    free(img->comments.data);
+
+    if (img->comments.size != 0) {
+        for (int i = 0; i < img->comments.size; ++i)
+            free(img->comments.data[i]);
+        free(img->comments.data);
+    }
 
     if (img->array1 != NULL) {
         for (int i = 0; i < img->height; i++)

@@ -281,7 +281,8 @@ Image read_image(FILE* fp) {
 
     char *header = read_header_to_string(&img, fp);
 
-    read_comments_array_to_img(&img, header);
+    if (img.comments.size != 0)
+        read_comments_array_to_img(&img, header);
 
     char headerWithoutComment[100];
     generate_header_without_comment(headerWithoutComment, header);
