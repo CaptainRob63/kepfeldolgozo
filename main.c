@@ -18,6 +18,7 @@ float matrix_normalisation_constant(Matrix matrix) {
     return acc;
 }
 
+
 void process_pixel(Image *img, int x, int y, Matrix matrix, float norm) {
     float accR = 0;
     float accG = 0;
@@ -29,21 +30,23 @@ void process_pixel(Image *img, int x, int y, Matrix matrix, float norm) {
     for (int i = 0; i < matrix.array.height; ++i) {
         for (int j = 0; j < matrix.array.width; ++j) {
 
-            if (startPosX + i  <  0           |
-                startPosX + i  >  img->width  |
-                startPosY + j  <  0           |
-                startPosY + j  >  img->height )
+            if (startPosX + j  <  0            |
+                startPosX + j  >=  img->width  |
+                startPosY + i  <  0            |
+                startPosY + i  >=  img->height )
                 continue;
 
-            accR += matrix.array.data[i][j] * img->array1 [startPosX + i]  [startPosY + j].red;
-            accG += matrix.array.data[i][j] * img->array1 [startPosX + i]  [startPosY + j].green;
-            accB += matrix.array.data[i][j] * img->array1 [startPosX + i]  [startPosY + j].blue;
+            accR += matrix.array.data[i][j] * img->array1 [startPosY + i]  [startPosX + j].red;
+            accG += matrix.array.data[i][j] * img->array1 [startPosY + i]  [startPosX + j].green;
+            accB += matrix.array.data[i][j] * img->array1 [startPosY + i]  [startPosX + j].blue;
+
+            //printf("%d %d\n", startPosX+j, startPosY+i);
         }
     }
 
-    img->array1[x][y].red   = accR / norm;
-    img->array1[x][y].green = accG / norm;
-    img->array1[x][y].blue  = accB / norm;
+    img->array1[y][x].red   =  accR / norm;
+    img->array1[y][x].green =  accG / norm;
+    img->array1[y][x].blue  =  accB / norm;
     //printf("%d %d\n",x,y);
 }
 
@@ -74,7 +77,7 @@ int main(int argc, char *argv[]) {
     img = read_image(fp);
     fclose(fp);
 
-    Matrix matrix = read_matrix("asdasdasd", "5", "5", "0 0 1 0 0 0 1 1 1 0 1 1 1 1 1 0 1 1 1 0 0 0 1 0 0 ");
+    Matrix matrix = read_matrix("asdasdasd", "5", "5", "1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1");
 
     fp = fopen("img.ppm", "wb");
 
@@ -84,7 +87,7 @@ int main(int argc, char *argv[]) {
     write_image_P6(&img, fp);
 
     matrix_free(&matrix);
-    //image_free(&img);
+    image_free(&img);
 /*
     Matrix matrix = read_matrix("asdasdasd", "4", "3", "1 2 3 4 5 6 7 8 9 10 11 12");
     //Matrix matrix = read_matrix(argv[1], argv[2], argv[3], argv[4]);
