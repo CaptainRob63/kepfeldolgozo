@@ -219,8 +219,6 @@ static void generate_header_without_comment(char *headerWithoutComment, const ch
 }
 
 
-
-
 // header without comment can be trivially tokenized with newline characters as a delimiter.
 static void read_header_wo_comment_to_img(Image *img, char *headerWithoutComment) {
     char *token;

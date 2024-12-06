@@ -11,4 +11,6 @@ add_executable(
         iras.h
         util.c
         util.h
+        process.c
+        process.h
 )

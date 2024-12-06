@@ -11,6 +11,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "C:/Users/R/CLionProjects/kepfeldolgozo/iras.c" "CMakeFiles/kepfeldolgozo.dir/iras.c.obj" "gcc" "CMakeFiles/kepfeldolgozo.dir/iras.c.obj.d"
   "C:/Users/R/CLionProjects/kepfeldolgozo/main.c" "CMakeFiles/kepfeldolgozo.dir/main.c.obj" "gcc" "CMakeFiles/kepfeldolgozo.dir/main.c.obj.d"
   "C:/Users/R/CLionProjects/kepfeldolgozo/olvasas.c" "CMakeFiles/kepfeldolgozo.dir/olvasas.c.obj" "gcc" "CMakeFiles/kepfeldolgozo.dir/olvasas.c.obj.d"
+  "C:/Users/R/CLionProjects/kepfeldolgozo/process.c" "CMakeFiles/kepfeldolgozo.dir/process.c.obj" "gcc" "CMakeFiles/kepfeldolgozo.dir/process.c.obj.d"
   "C:/Users/R/CLionProjects/kepfeldolgozo/util.c" "CMakeFiles/kepfeldolgozo.dir/util.c.obj" "gcc" "CMakeFiles/kepfeldolgozo.dir/util.c.obj.d"
   )
 

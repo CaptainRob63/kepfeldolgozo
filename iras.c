@@ -26,8 +26,6 @@ void write_matrix(const Matrix *matrix, FILE *fp) {
     fprintf(fp, "\n\n");
 }
 
-
-
 void write_image_P6(const Image *img, FILE *fp) {
     fputs("P6",fp);
 

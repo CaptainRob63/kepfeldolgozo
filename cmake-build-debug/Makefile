@@ -200,6 +200,30 @@ olvasas.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\kepfeldolgozo.dir\build.make CMakeFiles/kepfeldolgozo.dir/olvasas.c.s
 .PHONY : olvasas.c.s
 
+process.obj: process.c.obj
+.PHONY : process.obj
+
+# target to build an object file
+process.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\kepfeldolgozo.dir\build.make CMakeFiles/kepfeldolgozo.dir/process.c.obj
+.PHONY : process.c.obj
+
+process.i: process.c.i
+.PHONY : process.i
+
+# target to preprocess a source file
+process.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\kepfeldolgozo.dir\build.make CMakeFiles/kepfeldolgozo.dir/process.c.i
+.PHONY : process.c.i
+
+process.s: process.c.s
+.PHONY : process.s
+
+# target to generate assembly for a file
+process.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\kepfeldolgozo.dir\build.make CMakeFiles/kepfeldolgozo.dir/process.c.s
+.PHONY : process.c.s
+
 util.obj: util.c.obj
 .PHONY : util.obj
 
@@ -242,6 +266,9 @@ help:
 	@echo ... olvasas.obj
 	@echo ... olvasas.i
 	@echo ... olvasas.s
+	@echo ... process.obj
+	@echo ... process.i
+	@echo ... process.s
 	@echo ... util.obj
 	@echo ... util.i
 	@echo ... util.s

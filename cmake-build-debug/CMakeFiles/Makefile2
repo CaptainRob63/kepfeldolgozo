@@ -80,12 +80,12 @@ clean: CMakeFiles/kepfeldolgozo.dir/clean
 CMakeFiles/kepfeldolgozo.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\kepfeldolgozo.dir\build.make CMakeFiles/kepfeldolgozo.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\kepfeldolgozo.dir\build.make CMakeFiles/kepfeldolgozo.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\R\CLionProjects\kepfeldolgozo\cmake-build-debug\CMakeFiles --progress-num=1,2,3,4,5 "Built target kepfeldolgozo"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\R\CLionProjects\kepfeldolgozo\cmake-build-debug\CMakeFiles --progress-num=1,2,3,4,5,6 "Built target kepfeldolgozo"
 .PHONY : CMakeFiles/kepfeldolgozo.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/kepfeldolgozo.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\R\CLionProjects\kepfeldolgozo\cmake-build-debug\CMakeFiles 5
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\R\CLionProjects\kepfeldolgozo\cmake-build-debug\CMakeFiles 6
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 CMakeFiles/kepfeldolgozo.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\R\CLionProjects\kepfeldolgozo\cmake-build-debug\CMakeFiles 0
 .PHONY : CMakeFiles/kepfeldolgozo.dir/rule

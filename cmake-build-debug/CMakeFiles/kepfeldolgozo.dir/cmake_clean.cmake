@@ -5,6 +5,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/kepfeldolgozo.dir/main.c.obj.d"
   "CMakeFiles/kepfeldolgozo.dir/olvasas.c.obj"
   "CMakeFiles/kepfeldolgozo.dir/olvasas.c.obj.d"
+  "CMakeFiles/kepfeldolgozo.dir/process.c.obj"
+  "CMakeFiles/kepfeldolgozo.dir/process.c.obj.d"
   "CMakeFiles/kepfeldolgozo.dir/util.c.obj"
   "CMakeFiles/kepfeldolgozo.dir/util.c.obj.d"
   "kepfeldolgozo.exe"
