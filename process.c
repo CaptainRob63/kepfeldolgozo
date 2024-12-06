@@ -21,20 +21,6 @@ static double matrix_normalisation_constant(Matrix matrix) {
     return acc;
 }
 
-static void matrix_max_min(Matrix *matrix, double *maxOut, double *minOut) {
-    double max = matrix->array.data[0][0];
-    double min = matrix->array.data[0][0];
-    for (int i = 0; i < matrix->array.height; ++i)
-        for (int j = 0; j < matrix->array.width; ++j) {
-            if (matrix->array.data[i][j] < min) min = matrix->array.data[i][j];
-            if (matrix->array.data[i][j] > min) max = matrix->array.data[i][j];
-        }
-
-    *maxOut = max;
-    *minOut = min;
-
-}
-
 static void process_pixel(Image *img, int x, int y, Matrix matrix, double norm, float max, float min) {
     double accR = 0;
     double accG = 0;
@@ -56,17 +42,32 @@ static void process_pixel(Image *img, int x, int y, Matrix matrix, double norm, 
                 continue;
             }
 
+            if (img->array1 != NULL) {
+                accR += matrix.array.data[i][j] * img->array1 [startPosY + i]  [startPosX + j].red;
+                accG += matrix.array.data[i][j] * img->array1 [startPosY + i]  [startPosX + j].green;
+                accB += matrix.array.data[i][j] * img->array1 [startPosY + i]  [startPosX + j].blue;
+            }
 
-            accR += matrix.array.data[i][j] * img->array1 [startPosY + i]  [startPosX + j].red;
-            accG += matrix.array.data[i][j] * img->array1 [startPosY + i]  [startPosX + j].green;
-            accB += matrix.array.data[i][j] * img->array1 [startPosY + i]  [startPosX + j].blue;
+            if (img->array2 != NULL) {
+                accR += matrix.array.data[i][j] * img->array2 [startPosY + i]  [startPosX + j].red;
+                accG += matrix.array.data[i][j] * img->array2 [startPosY + i]  [startPosX + j].green;
+                accB += matrix.array.data[i][j] * img->array2 [startPosY + i]  [startPosX + j].blue;
+            }
 
         }
     }
 
-    img->array1[y][x].red   =  (accR / norm - min) / (max - min) * 255;
-    img->array1[y][x].green =  (accG / norm - min) / (max - min) * 255;
-    img->array1[y][x].blue  =  (accB / norm - min) / (max - min) * 255;
+    if (img->array1 != NULL) {
+        img->array1[y][x].red   =  (accR / norm - min) / (max - min) * 255;
+        img->array1[y][x].green =  (accG / norm - min) / (max - min) * 255;
+        img->array1[y][x].blue  =  (accB / norm - min) / (max - min) * 255;
+    }
+
+    if (img->array2 != NULL) {
+        img->array2[y][x].red   =  (accR / norm - min) / (max - min) * 65535;
+        img->array2[y][x].green =  (accG / norm - min) / (max - min) * 65535;
+        img->array2[y][x].blue  =  (accB / norm - min) / (max - min) * 65535;
+    }
 
 }
 

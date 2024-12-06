@@ -11,8 +11,6 @@
 
 static double matrix_normalisation_constant(Matrix matrix);
 
-static void matrix_max_min(Matrix *matrix, double *maxOut, double *minOut);
-
 static void process_pixel(Image *img, int x, int y, Matrix matrix, double norm, float max, float min);
 
 static void sum_pixel(Image *img, int x, int y, Matrix matrix, double norm, double *red, double *green, double *blue);

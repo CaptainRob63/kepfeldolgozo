@@ -36,8 +36,11 @@ int main(int argc, char *argv[]) {
 
         FILE *processed = fopen(argv[3], "wb");
         process_image(&image, matrix);
+        write_image_P6(&image, processed);
 
-
+        fclose(processed);
+        image_free(&image);
+        matrix_free(&matrix);
     }
 
 return 0;

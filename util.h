@@ -51,11 +51,6 @@ typedef struct Image {
 } Image;
 
 
-
-
-
-
-
 typedef struct ArrayDouble {
     double *data;
     int size;
@@ -80,6 +75,7 @@ typedef enum MATRIX_ERROR {
     MATERR_ARRAY
 } MATRIX_ERROR;
 
+void str_newline_to_zero(char *str);
 
 void string_array_print(StringArray *strArr, char *name);
 

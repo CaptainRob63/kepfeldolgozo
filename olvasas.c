@@ -87,11 +87,11 @@ Matrix read_matrix_from_file(const char *name, FILE *fp) {
 
     strcpy(matrix.name, name);
 
-    char buffer[32];
-
-    //fgets(buffer, 32, fp);
-
-    fscanf(fp,"%u %u", &matrix.array.width, &matrix.array.height);
+    if(fscanf(fp,"%d %d", &matrix.array.width, &matrix.array.height) == 0) {
+        matrix.array.width = 0;
+        matrix.array.height = 0;
+        return matrix;
+    }
 
     matrix.array.data = (double**) malloc(matrix.array.height * sizeof(double*));
     matrix.array.data[0] = (double*) malloc(matrix.array.height * matrix.array.width * sizeof(double));
@@ -102,7 +102,9 @@ Matrix read_matrix_from_file(const char *name, FILE *fp) {
 
     for (int i = 0; i < matrix.array.height; ++i) {
         for (int j = 0; j < matrix.array.width; ++j) {
-            fscanf(fp, "%lf ", &matrix.array.data[i][j]);
+            if(fscanf(fp, "%lf ", &matrix.array.data[i][j]) == 0) {
+                matrix.array.data == NULL;
+            }
         }
     }
 
@@ -119,8 +121,6 @@ void file_step_till_whitespace(FILE* fp) {
         SHOW("stepped towards new line from hashmark.\n");
     }
 }
-
-
 
 
 
@@ -162,7 +162,6 @@ static char *read_header_to_string(Image *img, FILE* fp) {
 
 
 
-
 // copies header string which is then mangled: it creates "parasitic" strings inside that copy, by changing the next newline after a hashmark to a terminating zero.
 // it then fills an array of strings with these "substrings", before actually copying them to the image structure.
 static void read_comments_array_to_img(Image *img, char *header) {
@@ -199,7 +198,6 @@ static void read_comments_array_to_img(Image *img, char *header) {
     free(tempComments.data);
 
 }
-
 
 
 
@@ -272,8 +270,7 @@ static void read_bitmap_2byte(Image *img, FILE* fp) {
 
 
 
-
-// so simple! definitely did not take 5 hours to write !!! (◡‿◡✿)
+// so simple! definitely did not take 500 hours to write !!! (◡‿◡✿)
 Image read_image(FILE* fp) {
     Image img;
 
